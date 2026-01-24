@@ -1,0 +1,9 @@
+{
+	"name": "azureapotifyadf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "86e78ff2-8035-45fe-9285-7f730b88cae5",
+		"tenantId": "7aadfc30-c879-461b-a793-974f8b756913"
+	}
+}
