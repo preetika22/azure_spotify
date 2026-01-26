@@ -43,7 +43,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "Select * \nfrom @{item().schema}.@{item().table} \nWhere @{item().cdc_col} \n      > '@{if(\n            empty(item().from_date),\n            activity('last_CDC').output.firstRow.cdc,\n            item().from_date\n          )}'",
+										"value": "Select * \nfrom @{item().schema}.@{item().table} \nWhere @{item().cdc_col} \n      > '@{if(\n            empty(item().from_date),\n            activity('last_CDC').output.value[0].cdc,\n            item().from_date\n          )}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -127,7 +127,8 @@
 										},
 										"file": "cdc.json"
 									}
-								}
+								},
+								"firstRowOnly": false
 							}
 						},
 						{
@@ -260,10 +261,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"container": "bronze",
-													"folder": {
-														"value": "@{item().table}_cdc",
-														"type": "Expression"
-													},
+													"folder": "CDC",
 													"file": "empty.json"
 												}
 											}
@@ -275,7 +273,7 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@{item().tbl}_cdc",
+														"value": "@{item().table}_cdc",
 														"type": "Expression"
 													},
 													"file": "cdc.json"
